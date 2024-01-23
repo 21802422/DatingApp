@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "start": "ng serve --proxy-config proxy.conf.json"
+
+  }
+}
