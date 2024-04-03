@@ -15,8 +15,10 @@ namespace API.Extensions
                     SQLitePCL.Batteries.Init();
                     opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
                 });
-            services.AddCors();
+           services.AddCors();
            services.AddScoped<ITokenService, TokenService>();
+           services.AddScoped<IUserRepository, userRepository>();
+           services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
            return services;
         }

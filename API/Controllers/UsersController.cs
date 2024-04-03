@@ -1,4 +1,7 @@
 ﻿using API.Data;
+using API.DTOs;
+using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,26 +15,28 @@ namespace API.Controllers;
 [Route("API/[controller]")] //api for users
 public class UsersController : ControllerBase
 {
-  private readonly DataContext _context; // allows to e accessable to the rest of the class
-  public UsersController(DataContext context)
+  private readonly IUserRepository _userRepository;
+  private readonly IMapper _mapper;
+  public UsersController(IUserRepository userRepository, IMapper mapper)
   {
-    _context = context;
+    _mapper = mapper;
+   _userRepository = userRepository;
   }
 
   
-  [AllowAnonymous]
+  
   [HttpGet] //retrieve a list if the all appUser object from DB and return Http Response
-  public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+  public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
   {
-    var users = await _context.User.ToListAsync();
-    return users;
+    var users = await _userRepository.GetMembersAsync();
+
+     return Ok(users);
   }
 
-  [HttpGet("{id}")] //retrieving a single appUsers object 4 DB on it PK and return it as HTTP
-  public async Task<ActionResult<AppUser>> GetUser(int id)
+  [HttpGet("{username}")] //retrieving a single appUsers object 4 DB on it PK and return it as HTTP
+  public async Task<ActionResult<MemberDto>> GetUser(string username)
   {
-    return await _context.User.FindAsync(id);
-
+    return await _userRepository.GetMemberAsync(username);
   }
 
 

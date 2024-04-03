@@ -1,4 +1,5 @@
 using API.Entities;
+using API.Extensions;
 
 namespace API{
 
@@ -19,10 +20,11 @@ namespace API{
         public string Country {get; set;}
         public List<Photo> Photos {get; set;} = new();
         
-        public int GetAge()
-        {
-            return DateofBirth.CalcuateAge();
-        }
+        // public int GetAge()
+        // {
+        //     return DateofBirth.CalcuCalcuateAge();
+        // }
+       
 
     }
    
